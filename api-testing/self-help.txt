@@ -1,0 +1,32 @@
+Self-help: Running pytest + Allure reports
+=========================================
+
+Prerequisites (install once)
+- Python 3.12+ with venv support: sudo apt update && sudo apt install -y python3 python3-venv python3-pip
+- Node.js + npm: sudo apt install -y nodejs npm
+- Java runtime for Allure CLI: sudo snap install openjdk
+
+Project setup (once per clone)
+- Create and activate venv: python3 -m venv .venv && . .venv/bin/activate
+- Install Python deps: pip install pytest allure-pytest requests
+- Install Allure CLI locally: npm install allure-commandline --save-dev
+
+Environment for Allure (per shell/session)
+- export JAVA_HOME=/snap/openjdk/current/jdk
+- export PATH="$JAVA_HOME/bin:$PATH"
+- . .venv/bin/activate
+
+Run tests and generate report
+- cd /home/ganesh-datta-padamata/prac/Python_practice/api-testing
+- rm -rf reports
+- pytest --alluredir=reports
+- npx allure generate reports -o reports/html --clean
+
+View the report
+- Static (no sockets needed): python3 -m http.server 8000 --directory reports/html
+  then open http://localhost:8000
+- Allure viewer: npx allure open reports    (or: npx allure serve reports)
+
+Troubleshooting
+- If Allure says JAVA_HOME invalid: ensure JAVA_HOME=/snap/openjdk/current/jdk and PATH has $JAVA_HOME/bin.
+- If report looks empty in IDE preview: serve over HTTP (see "Static" command above) instead of opening index.html directly.
